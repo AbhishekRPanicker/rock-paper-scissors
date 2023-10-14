@@ -11,7 +11,11 @@ function getComputerChoice() {
 }
 
 function capitalize(string) {
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+    if (string) {
+        return string[0].toUpperCase() + string.slice(1).toLowerCase();
+    } else {
+        return "Invalid";
+    }
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -38,6 +42,18 @@ function playRound(playerSelection, computerSelection) {
 }
 
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+    keepPlaying = true;
+    while (keepPlaying) {
+        let playerSelection = prompt("Enter your choice: Rock, Paper or Scissors?");
+        if (playerSelection === null){
+            keepPlaying = false;
+            break;
+        }
+        let computerSelection = getComputerChoice();
+        alert(playRound(playerSelection, computerSelection));
+        keepPlaying = confirm("Do you want to play again?");
+    }
+}
+
+game();
