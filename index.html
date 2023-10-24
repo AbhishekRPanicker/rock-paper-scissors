@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div id="choice">
-        <button id="rock">Rock</button>
-        <button id="paper">Paper</button>
-        <button id="scissors">Scissors</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div>
+      <div id="rules">
+        <h1>ROCK PAPER SCISSORS</h1>
+        <p>Make your choice: Rock, Paper or Scissors</p>
+        <p>First to <span>5</span> wins</p>
+      </div>
+      <div id="choice">
+        <img src="./images/rock.svg" alt="rock" id="rock" />
+        <img src="./images/paper.svg" alt="paper" id="paper" />
+        <img src="./images/scissors.svg" alt="scissors" id="scissors" />
+      </div>
+      <div id="result"></div>
     </div>
-    <div id="result"></div>
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>

@@ -11,9 +11,6 @@ function getComputerChoice() {
 }
 
 
-
-
-
 function findWinner(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
         return "Draw";
@@ -35,6 +32,9 @@ function findWinner(playerSelection, computerSelection) {
 function restart() {
     let resultDiv = document.querySelector("div#result");
     resultDiv.innerHTML = "";
+    p = document.createElement("p");
+    p.textContent = "Let's Go!!!"
+    resultDiv.appendChild(p); 
     choiceDiv.addEventListener('click', game);
 }
 
@@ -87,6 +87,7 @@ function game(event) {
                 p2.textContent = `Player:${++playerScore} Computer:${++computerScore}`;
                 break;
         }
+        resultDiv.innerHTML = "";
         resultDiv.append(p1, p2);
         if (playerScore === 5 || computerScore === 5) {
             choiceDiv.removeEventListener('click', game);
