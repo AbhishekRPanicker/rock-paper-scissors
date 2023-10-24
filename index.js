@@ -10,50 +10,96 @@ function getComputerChoice() {
     }
 }
 
-function capitalize(string) {
-    if (string) {
-        return string[0].toUpperCase() + string.slice(1).toLowerCase();
-    } else {
-        return "Invalid";
-    }
-}
-
-function playRound(playerSelection, computerSelection) {
-    playerSelection = capitalize(playerSelection);
 
 
+
+
+function findWinner(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
-        return `It's a Draw! ${playerSelection} draws ${computerSelection}`;
+        return "Draw";
     } else if (
         playerSelection === "Rock" && computerSelection === "Paper"
         || playerSelection === "Paper" && computerSelection === "Scissors"
         || playerSelection === "Scissors" && computerSelection === "Rock"
     ) {
-        return `You Lose! ${computerSelection} beats ${playerSelection}`;
+        return "Computer";
     } else if (
         playerSelection === "Rock" && computerSelection === "Scissors"
         || playerSelection === "Paper" && computerSelection === "Rock"
         || playerSelection === "Scissors" && computerSelection === "Paper"
     ) {
-        return `You Win! ${playerSelection} beats ${computerSelection}`;
-    } else {
-        return "Invalid Choice! Try again.";
+        return "Player";
     }
 }
 
+function restart() {
+    let resultDiv = document.querySelector("div#result");
+    resultDiv.innerHTML = "";
+    choiceDiv.addEventListener('click', game);
+}
 
-function game() {
-    keepPlaying = true;
-    while (keepPlaying) {
-        let playerSelection = prompt("Enter your choice: Rock, Paper or Scissors?");
-        if (playerSelection === null){
-            keepPlaying = false;
+function displayFinalResult(resultDiv) {
+    let p3 = document.createElement("p");
+    let btn = document.createElement("button");
+    btn.textContent = "PLAY AGAIN";
+    if (playerScore === 5 && computerScore === 5) {
+        p3.textContent = "It's a complete Draw! Want to try again?";
+    } else if (playerScore === 5) {
+        p3.textContent = "Congratulations, You Win! Want to play again?";
+    } else if (computerScore === 5) {
+        p3.textContent = "Game Over! Want to try again?";
+    }
+    resultDiv.append(p3, btn);
+    btn.addEventListener('click', restart);
+
+}
+
+function game(event) {
+    let computerSelection = getComputerChoice();
+    let playerSelection = "";
+    switch (event.target.id) {
+        case "rock":
+            playerSelection = "Rock";
             break;
-        }
-        let computerSelection = getComputerChoice();
-        alert(playRound(playerSelection, computerSelection));
-        keepPlaying = confirm("Do you want to play again?");
+        case "paper":
+            playerSelection = "Paper";
+            break;
+        case "scissors":
+            playerSelection = "Scissors";
+            break;
     }
+    if (playerSelection) {
+        let p1 = document.createElement("p");
+        let p2 = document.createElement("p");
+        let resultDiv = document.querySelector("div#result");
+        let winner = findWinner(playerSelection, computerSelection);
+        switch (winner) {
+            case "Computer":
+                p1.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
+                p2.textContent = `Player:${playerScore} Computer:${++computerScore}`;
+                break;
+            case "Player":
+                p1.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
+                p2.textContent = `Player:${++playerScore} Computer:${computerScore}`;
+                break;
+            case "Draw":
+                p1.textContent = `It's a Draw! ${playerSelection} draws ${computerSelection}`;
+                p2.textContent = `Player:${++playerScore} Computer:${++computerScore}`;
+                break;
+        }
+        resultDiv.append(p1, p2);
+        if (playerScore === 5 || computerScore === 5) {
+            choiceDiv.removeEventListener('click', game);
+            displayFinalResult(resultDiv);
+            playerScore = 0;
+            computerScore = 0;
+        }
+    }
+
 }
 
-game();
+let playerScore = 0;
+let computerScore = 0;
+let choiceDiv = document.querySelector("div#choice");
+choiceDiv.addEventListener('click', game);
+
